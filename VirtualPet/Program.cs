@@ -23,6 +23,25 @@ namespace VirtualPet
             int menuChoice = Convert.ToInt32(Console.ReadLine());
             return menuChoice;
         }
+
+        static void Shape()
+        {
+            int i, j;
+
+            for (i = 0; i < 5; i++)
+            {
+
+                for (j = 5 - i; j > 0; j--)
+                    Console.Write(" ");
+
+                for (j = 0; j <= 2 * i; j++)
+                    Console.Write("*");
+
+                Console.WriteLine();
+
+            }
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("WELCOME AND THANK YOU FOR ADOPTING A NEW PET!");
@@ -38,6 +57,10 @@ namespace VirtualPet
                 if (choice == 1)
                 {
                     myPet.FeedPet();
+                }
+                else if (choice == 2)
+                {
+                    myPet.WaterPet();
                 }
                 else if (choice == 4)
                 {

@@ -18,8 +18,8 @@ namespace VirtualPet
         {
             this.name = Name;
             HungerLevel = 50;
-            ThirstLevel = 0;
-            BoredomLevel = 0;
+            ThirstLevel = 50;
+            BoredomLevel = 50;
         }
 
         public void SetName(string Name)
@@ -41,12 +41,18 @@ namespace VirtualPet
         {
             if (HungerLevel < 0)
             {
-                Console.WriteLine("\n - {0}'s Hunger Level is {1}/100", name, HungerLevel);
+                Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
                 HungerLevel += Tick();
+            }
+            else if (ThirstLevel < 0)
+            {
+                Console.WriteLine("\n - {0}'s thirst Level is {1}/100", name, ThirstLevel);
+                ThirstLevel += Tick();
             }
             else
             {
                 HungerLevel += Tick();
+                ThirstLevel += Tick();
                 Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
                 Console.WriteLine("\n - {0}'s thirst level is {1}/100", name, ThirstLevel);
                 Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
@@ -54,7 +60,7 @@ namespace VirtualPet
         }
 
         static int overFeedNumber;
-        public void FeedPet() //Feeds Pet
+        public void FeedPet() // Feeds Pet
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -75,6 +81,37 @@ namespace VirtualPet
                 Console.WriteLine("\n{0} has been fed\n", name);
                 Console.WriteLine("{0}'s hunger level is {1}/100\n", name, HungerLevel);
             }
+        }
+
+        static int overWater;
+        public void WaterPet()// Gives pet water
+        {
+            if (ThirstLevel == 0)
+            {
+                Console.WriteLine("{0} is not thirsty and doesn't want to drink water", name);
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("  10    20    30    40    50     60     70     80     90     100\n");
+                Console.ResetColor();
+                Console.WriteLine("\nHow much water do you want to give {0}?\n", name);
+                ThirstLevel -= Convert.ToInt32(Console.ReadLine());
+                if (ThirstLevel < 0)
+                {
+                    overWater = ((ThirstLevel) * -1);
+                    Console.WriteLine("You have given {0} too much water. You went {1} past {0}'s water intake", name, overWater);
+                }
+                else
+                {
+                    Console.WriteLine("{0}'s new thirst level is {1}/100\n", name, ThirstLevel);
+                }
+            }
+
         }
     }
 }
