@@ -9,77 +9,71 @@ namespace VirtualPet
     class VirtualPet
     {
         Random random = new Random();
-        private int hungerLevel;
-        public int HungerLevel
-        {
-            get
-            {
-                return hungerLevel;
-            }
-            set
-            {
-                hungerLevel = value;
-            }
-        }               
+        private string name { get; set; }
+        public int HungerLevel { get; set; }
         public int ThirstLevel { get; set; }
         public int BoredomLevel { get; set; }
 
-        public VirtualPet()
+        public VirtualPet(string Name)
         {
-            HungerLevel = Food();
+            this.name = Name;
+            HungerLevel = 50;
             ThirstLevel = 0;
             BoredomLevel = 0;
         }
 
-        public int Tick()
+        public void SetName(string Name)
+        {
+            this.name = Name;
+        }
+        public string GetName()
+        {
+            return name;
+        }
+
+        public int Tick() //random number generator used to increase levels of Hunger, Thirst, Boredom.
         {
             int tick = random.Next(1, 8);
             return tick;
         }
 
-        public int Food()
-        {
-            int _food = 50;
-            return _food;
-        }
-
-        public void Stats()
+        public void Stats() //Shows pet stats. Increments numbers every time using Tick()
         {
             if (HungerLevel < 0)
             {
-                Console.WriteLine("\n - Your pet Hunger Level is {0}/100", HungerLevel);
+                Console.WriteLine("\n - {0}'s Hunger Level is {1}/100", name, HungerLevel);
                 HungerLevel += Tick();
             }
             else
             {
                 HungerLevel += Tick();
-                Console.WriteLine("\n - Your pet Hunger Level is {0}/100", HungerLevel);
-                Console.WriteLine("\n - Your pet Thirst Level is {0}/100", ThirstLevel);
-                Console.WriteLine("\n - Your pet Boredom Level is {0}/100", BoredomLevel);
+                Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
+                Console.WriteLine("\n - {0}'s thirst level is {1}/100", name, ThirstLevel);
+                Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
             }
         }
 
         static int overFeedNumber;
-        public void FeedPet2()
+        public void FeedPet() //Feeds Pet
         {
             Console.WriteLine();
-            Console.WriteLine("How much food do you want to feed your dog?\n");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("(treat -----------snack-------------medium meal-----------full meal)\n");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("  10    20    30    40    50     60     70     80     90     100\n");
             Console.ResetColor();
+            Console.WriteLine("\nHow much food do you want to feed {0}?\n", name);
             HungerLevel -= Convert.ToInt32(Console.ReadLine());
             if (HungerLevel < 0)
             {
                 overFeedNumber = ((HungerLevel) * -1);
-                Console.WriteLine("You have overfed your pet by {0}", overFeedNumber);
+                Console.WriteLine("You have overfed {0} by {1}", name, overFeedNumber);
             }
             else
             {
-                Console.WriteLine("\nYour pet has been fed\n");
-                Console.WriteLine("Your pet's Hunger Level is {0}/100\n", HungerLevel);
+                Console.WriteLine("\n{0} has been fed\n", name);
+                Console.WriteLine("{0}'s hunger level is {1}/100\n", name, HungerLevel);
             }
         }
     }
