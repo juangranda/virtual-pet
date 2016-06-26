@@ -20,7 +20,7 @@ namespace VirtualPet
             this.name = Name;
             HungerLevel = 50;
             ThirstLevel = 50;
-            BoredomLevel = 50;
+            BoredomLevel = 62;
         }
 
         public void SetName(string Name)
@@ -38,6 +38,20 @@ namespace VirtualPet
             return tick;
         }
 
+        public void TimeGoesBy()
+        {
+            Console.Write("\n. ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". \n");
+            Thread.Sleep(400);
+        }
+
         public void Stats() //Shows pet stats. Increments numbers every time using Tick()
         {
             if (HungerLevel < 0)
@@ -50,6 +64,7 @@ namespace VirtualPet
             }
             else if (ThirstLevel < 0)
             {
+                ThirstLevel = 0;
                 Console.WriteLine("\n - {0}'s thirst Level is {1}/100", name, ThirstLevel);
                 ThirstLevel += Tick();
                 Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
@@ -60,9 +75,12 @@ namespace VirtualPet
                 HungerLevel += Tick();
                 ThirstLevel += Tick();
                 BoredomLevel += Tick();
-                Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
-                Console.WriteLine("\n - {0}'s thirst level is {1}/100", name, ThirstLevel);
-                Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n{0}'s LEVELS:", name);
+                Console.ResetColor();
+                Console.WriteLine("\n - Hunger: {0}/100", HungerLevel);
+                Console.WriteLine("\n - Thirst: {0}/100", ThirstLevel);
+                Console.WriteLine("\n - Boredom: {0}/100", BoredomLevel);
             }
             petWaste();
         }
@@ -72,7 +90,8 @@ namespace VirtualPet
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("(treat -----------snack-------------medium meal-----------full meal)\n");
+            //Console.WriteLine("(treat -----------snack-------------medium meal-----------full meal)\n");
+            Console.WriteLine(" ..... <-----------HEALTHY RANGE-----------> ..................... \n");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("  10    20    30    40    50     60     70     80     90     100\n");
@@ -80,30 +99,42 @@ namespace VirtualPet
             Console.WriteLine("{0}'s hunger level is {1}", name, HungerLevel);
             Console.WriteLine("\nHow much food do you want to feed {0}?\n", name);
             HungerLevel -= Convert.ToInt32(Console.ReadLine());
+            ThirstLevel += Tick();
+            Console.Write("\n. ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". \n");
+            Thread.Sleep(400);
             if (HungerLevel < 0)
             {
                 overFeedNumber = ((HungerLevel) * -1);
-                Console.WriteLine("You have overfed {0} by {1}", name, overFeedNumber);
+                Console.WriteLine("\nYou have overfed {0} by {1}", name, overFeedNumber);
+                Console.WriteLine("\n{0} is extremelly full and doesn't like to be overfed :(", name);
             }
             else
             {
                 Console.WriteLine("\n{0} has been fed\n", name);
                 Console.WriteLine("{0}'s hunger level is {1}/100\n", name, HungerLevel);
             }
+            Thread.Sleep(1000);
             petWaste();
+            Thread.Sleep(1500);
         }
 
         public void petWaste() // Pet waste when full of food or water
         {
-            if ((HungerLevel >= 25 && HungerLevel <= 30) || (HungerLevel >= 5 && HungerLevel <= 10))
+            if ((HungerLevel >= 1 && HungerLevel <= 6) || (HungerLevel >= 10 && 
+                HungerLevel <= 22) || (HungerLevel >= 40 && HungerLevel <= 50))
             {
                 HungerLevel += (Tick() * 4);
-                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\n *** {0} had to take care of some personal business ***", name);
                 Console.WriteLine("\n             New hunger level is {0}/100", HungerLevel);
                 Console.ResetColor();
             }
-            if ((ThirstLevel >= 25 && ThirstLevel <= 38) || (ThirstLevel >= 5 && ThirstLevel <= 12))
+            if ((ThirstLevel >= 3 && ThirstLevel <= 12) || (ThirstLevel >= 15 
+                && ThirstLevel <= 28) || (ThirstLevel >= 42 && ThirstLevel <= 50))
             {
                 ThirstLevel += (Tick() * 3);
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -114,7 +145,7 @@ namespace VirtualPet
         }
 
         static int overWater;
-        public void WaterPet()// Gives pet water
+        public void WaterPet() // Gives pet water
         {
             if (ThirstLevel == 0)
             {
@@ -123,39 +154,67 @@ namespace VirtualPet
             else
             {
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("  10    20    30    40    50     60     70     80     90     100\n");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine(" ...  <---------HEALTHY RANGE-------->  ......................... ");
+                Console.ResetColor();
+                Console.WriteLine("\n{0}'s thirst level is {1}", name, ThirstLevel);
                 Console.WriteLine("\nHow much water do you want to give {0}?\n", name);
                 ThirstLevel -= Convert.ToInt32(Console.ReadLine());
+                Console.Write("\n. ");
+                Thread.Sleep(400);
+                Console.Write(". ");
+                Thread.Sleep(400);
+                Console.Write(". ");
+                Thread.Sleep(400);
                 if (ThirstLevel < 0)
                 {
                     overWater = ((ThirstLevel) * -1);
-                    Console.WriteLine("You have given {0} too much water. You went {1} past {0}'s water intake", name, overWater);
+                    Console.WriteLine("\nYou have given {0} too much water. \nYou went {1} past {0}'s water intake", name, overWater);
                 }
                 else
                 {
                     Console.WriteLine("{0}'s new thirst level is {1}/100\n", name, ThirstLevel);
                 }
+                Thread.Sleep(1000);
             }
-
+            petWaste();
+            Thread.Sleep(1500);
         }
 
-        private int PlayMenu()
+        /// Options for pet activities. Used inside <see cref="PlayWithPet"/>
+        private int PlayMenu() 
         {
             Console.WriteLine("\nWhat do you want to do with {0}?\n", name);
             Console.WriteLine("     1. Go for a walk");
             Console.WriteLine("     2. Play Catch");
-            Console.WriteLine("     3. Take {0} to the dog park", name);
+            Console.WriteLine("     3. Take {0} to the park", name);
             Console.WriteLine("     4. Go back to the main menu");
             int playOption = Convert.ToInt32(Console.ReadLine());
             return playOption;
-        }// Menu for play options (inside PlayWithPet loop)
+        }
 
-        public void PlayWithPet()
+        private void ManThrowingBall() // Time based graphic of playing catch
+        {
+            Console.WriteLine("\n   o ");
+            Console.WriteLine(" '- \\-- ");
+            Console.Write("   || ");
+            Thread.Sleep(400);
+            Console.Write("    . ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". ");
+            Thread.Sleep(400);
+            Console.Write(". \n");
+            Thread.Sleep(400);
+        } 
+
+        public void PlayWithPet() // Play with pet and reduce boredom and other levels
         {
             int playChoice = 0;
             while (playChoice != 4)
@@ -164,46 +223,48 @@ namespace VirtualPet
                 if (playChoice == 1)
                 {
                     BoredomLevel = BoredomLevel / 2;
-                    Console.Write("\n. ");
-                    Thread.Sleep(400);
-                    Console.Write(". ");
-                    Thread.Sleep(400);
-                    Console.Write(". ");
-                    Thread.Sleep(400);
-                    Console.Write(". ");
-                    Thread.Sleep(400);
-                    Console.Write(". \n");
-                    Thread.Sleep(400);
-                    Console.WriteLine("\n{0} is so happy that you took her for a walk!", name);
+                    ThirstLevel += Tick() * 2;
+                    HungerLevel += Tick();
+                    TimeGoesBy();
+                    Console.WriteLine("\n{0} loved going for a walk!", name);
+                    Thread.Sleep(1200);
                     Console.WriteLine("\nNew boredom level is {0}/100\n", BoredomLevel);
+                    Thread.Sleep(1200);
+                    Console.WriteLine("New thirst level is {0}/100\n", ThirstLevel);
+                    Thread.Sleep(1200);
+                    Console.WriteLine("New hunger level is {0}/100\n", HungerLevel);
+                    Thread.Sleep(1200);
                     break;
                 }
                 else if (playChoice == 2)
                 {
                     BoredomLevel = BoredomLevel / 3;
-                    Console.WriteLine("\n   o ");
-                    Console.WriteLine(" '- \\-- ");
-                    Console.Write("   || ");
-                    Thread.Sleep(400);
-                    Console.Write("    . ");
-                    Thread.Sleep(400);
-                    Console.Write(". ");
-                    Thread.Sleep(400);
-                    Console.Write(". ");
-                    Thread.Sleep(400);
-                    Console.Write(". ");
-                    Thread.Sleep(400);
-                    Console.Write(". \n");
-                    Thread.Sleep(400);
+                    ThirstLevel += Tick() * 3;
+                    HungerLevel += Tick();
+                    ManThrowingBall();
                     Console.WriteLine("\n{0} loved playing catch!", name);
+                    Thread.Sleep(1200);
                     Console.WriteLine("\nNew boredom level is {0}/100\n", BoredomLevel);
+                    Thread.Sleep(1200);
+                    Console.WriteLine("New thirst level is {0}/100\n", ThirstLevel);
+                    Thread.Sleep(1200);
+                    Console.WriteLine("New hunger level is {0}/100\n", HungerLevel);
+                    Thread.Sleep(1200);
                     break;
                 }
                 else if (playChoice == 3)
                 {
-                    Console.WriteLine("\nThanks for taking {0} to the park", name);
                     BoredomLevel = BoredomLevel / 2;
+                    ThirstLevel += Tick() * 2;
+                    HungerLevel += Tick();
+                    TimeGoesBy();
+                    Console.WriteLine("\n{0} loved the park!", name);
+                    Thread.Sleep(1200);
                     Console.WriteLine("\nNew boredom level is {0}/100\n", BoredomLevel);
+                    Console.WriteLine("New thirst level is {0}/100\n", ThirstLevel);
+                    Thread.Sleep(1200);
+                    Console.WriteLine("New hunger level is {0}/100\n", HungerLevel);
+                    Thread.Sleep(1200);
                     break;
                 }
                 else if (!(playChoice >= 1 && playChoice <= 4))
@@ -211,7 +272,7 @@ namespace VirtualPet
                     Console.WriteLine("\nPlease choose a number from the menu (1, 2, 3, 4)");
                 }
             }
-        } // Play with pet and reduce boredom level
-
+            petWaste();
+        } 
     }
 }

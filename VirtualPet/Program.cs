@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace VirtualPet
 {
@@ -25,11 +26,12 @@ namespace VirtualPet
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("WELCOME AND THANK YOU FOR ADOPTING A NEW PET!");
-            Console.WriteLine("\nPlease enter the name of your new pet:\n");
+            Console.WriteLine("WELCOME AND THANK YOU FOR ADOPTING A PUPPY!");
+            Console.WriteLine("\nPlease enter the name of your new puppy:\n");
             VirtualPet myPet = new VirtualPet(Console.ReadLine());
-            Console.WriteLine("\n{0} is so happy to be your new pet :)", myPet.GetName());
-            Console.WriteLine("\nPlease take good care of {0}.", myPet.GetName());
+            Console.WriteLine("\n{0} is so happy to be your new pet!", myPet.GetName());
+            Console.WriteLine("\nEnjoy your time with {0} :)", myPet.GetName());
+            myPet.TimeGoesBy();
 
             int choice = 1;
             while (choice != 5)
