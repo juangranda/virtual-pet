@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace VirtualPet
 {
@@ -51,11 +52,14 @@ namespace VirtualPet
             {
                 Console.WriteLine("\n - {0}'s thirst Level is {1}/100", name, ThirstLevel);
                 ThirstLevel += Tick();
+                Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
+                Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
             }
             else
             {
                 HungerLevel += Tick();
                 ThirstLevel += Tick();
+                BoredomLevel += Tick();
                 Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
                 Console.WriteLine("\n - {0}'s thirst level is {1}/100", name, ThirstLevel);
                 Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
@@ -89,7 +93,7 @@ namespace VirtualPet
             petWaste();
         }
 
-        public void petWaste() // Pet waste when full or extra full
+        public void petWaste() // Pet waste when full of food or water
         {
             if ((HungerLevel >= 25 && HungerLevel <= 30) || (HungerLevel >= 5 && HungerLevel <= 10))
             {
@@ -139,5 +143,75 @@ namespace VirtualPet
             }
 
         }
+
+        private int PlayMenu()
+        {
+            Console.WriteLine("\nWhat do you want to do with {0}?\n", name);
+            Console.WriteLine("     1. Go for a walk");
+            Console.WriteLine("     2. Play Catch");
+            Console.WriteLine("     3. Take {0} to the dog park", name);
+            Console.WriteLine("     4. Go back to the main menu");
+            int playOption = Convert.ToInt32(Console.ReadLine());
+            return playOption;
+        }// Menu for play options (inside PlayWithPet loop)
+
+        public void PlayWithPet()
+        {
+            int playChoice = 0;
+            while (playChoice != 4)
+            {
+                playChoice = PlayMenu();
+                if (playChoice == 1)
+                {
+                    BoredomLevel = BoredomLevel / 2;
+                    Console.Write("\n. ");
+                    Thread.Sleep(400);
+                    Console.Write(". ");
+                    Thread.Sleep(400);
+                    Console.Write(". ");
+                    Thread.Sleep(400);
+                    Console.Write(". ");
+                    Thread.Sleep(400);
+                    Console.Write(". \n");
+                    Thread.Sleep(400);
+                    Console.WriteLine("\n{0} is so happy that you took her for a walk!", name);
+                    Console.WriteLine("\nNew boredom level is {0}/100\n", BoredomLevel);
+                    break;
+                }
+                else if (playChoice == 2)
+                {
+                    BoredomLevel = BoredomLevel / 3;
+                    Console.WriteLine("\n   o ");
+                    Console.WriteLine(" '- \\-- ");
+                    Console.Write("   || ");
+                    Thread.Sleep(400);
+                    Console.Write("    . ");
+                    Thread.Sleep(400);
+                    Console.Write(". ");
+                    Thread.Sleep(400);
+                    Console.Write(". ");
+                    Thread.Sleep(400);
+                    Console.Write(". ");
+                    Thread.Sleep(400);
+                    Console.Write(". \n");
+                    Thread.Sleep(400);
+                    Console.WriteLine("\n{0} loved playing catch!", name);
+                    Console.WriteLine("\nNew boredom level is {0}/100\n", BoredomLevel);
+                    break;
+                }
+                else if (playChoice == 3)
+                {
+                    Console.WriteLine("\nThanks for taking {0} to the park", name);
+                    BoredomLevel = BoredomLevel / 2;
+                    Console.WriteLine("\nNew boredom level is {0}/100\n", BoredomLevel);
+                    break;
+                }
+                else if (!(playChoice >= 1 && playChoice <= 4))
+                {
+                    Console.WriteLine("\nPlease choose a number from the menu (1, 2, 3, 4)");
+                }
+            }
+        } // Play with pet and reduce boredom level
+
     }
 }

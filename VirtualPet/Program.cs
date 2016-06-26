@@ -47,6 +47,10 @@ namespace VirtualPet
                 {
                     myPet.WaterPet();
                 }
+                else if (choice == 4)
+                {
+                    myPet.PlayWithPet();
+                }
                 else if (choice == 5)
                 {
                     Console.WriteLine("\nThank you for taking care of {0}.\n", myPet.GetName());
