@@ -14,34 +14,15 @@ namespace VirtualPet
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("\nMAIN MENU");
             Console.ResetColor();
-            Console.WriteLine("\n1. Feed your pet");
-            Console.WriteLine("2. Give water to your pet");
-            Console.WriteLine("3. Play with your pet");
-            Console.WriteLine("4. Show Pet stats");
+            Console.WriteLine("\n1. Show Pet stats");
+            Console.WriteLine("2. Feed your pet");
+            Console.WriteLine("3. Give water to your pet");
+            Console.WriteLine("4. Play with your pet");
             Console.WriteLine("5. Exit");
             Console.WriteLine("\nChoose a number from the menu");
             int menuChoice = Convert.ToInt32(Console.ReadLine());
             return menuChoice;
         }
-
-        static void Shape()
-        {
-            int i, j;
-
-            for (i = 0; i < 5; i++)
-            {
-
-                for (j = 5 - i; j > 0; j--)
-                    Console.Write(" ");
-
-                for (j = 0; j <= 2 * i; j++)
-                    Console.Write("*");
-
-                Console.WriteLine();
-
-            }
-        }
-
         static void Main(string[] args)
         {
             Console.WriteLine("WELCOME AND THANK YOU FOR ADOPTING A NEW PET!");
@@ -56,20 +37,20 @@ namespace VirtualPet
                 choice = Menu();
                 if (choice == 1)
                 {
-                    myPet.FeedPet();
+                    myPet.Stats();
                 }
                 else if (choice == 2)
                 {
-                    myPet.WaterPet();
+                    myPet.FeedPet();
                 }
-                else if (choice == 4)
+                else if (choice == 3)
                 {
-                    myPet.Stats();
+                    myPet.WaterPet();
                 }
                 else if (choice == 5)
                 {
                     Console.WriteLine("\nThank you for taking care of {0}.\n", myPet.GetName());
-                    Console.WriteLine("\nPress any key to exit");
+                    Console.WriteLine("Press any key to exit");
                 }
                 else
                 {

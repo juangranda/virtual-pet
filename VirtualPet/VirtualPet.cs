@@ -41,8 +41,11 @@ namespace VirtualPet
         {
             if (HungerLevel < 0)
             {
+                HungerLevel = 0;
                 Console.WriteLine("\n - {0}'s hunger level is {1}/100", name, HungerLevel);
                 HungerLevel += Tick();
+                Console.WriteLine("\n - {0}'s thirst level is {1}/100", name, ThirstLevel);
+                Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
             }
             else if (ThirstLevel < 0)
             {
@@ -57,6 +60,7 @@ namespace VirtualPet
                 Console.WriteLine("\n - {0}'s thirst level is {1}/100", name, ThirstLevel);
                 Console.WriteLine("\n - {0}'s boredom level is {1}/100", name, BoredomLevel);
             }
+            petWaste();
         }
 
         static int overFeedNumber;
@@ -69,6 +73,7 @@ namespace VirtualPet
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("  10    20    30    40    50     60     70     80     90     100\n");
             Console.ResetColor();
+            Console.WriteLine("{0}'s hunger level is {1}", name, HungerLevel);
             Console.WriteLine("\nHow much food do you want to feed {0}?\n", name);
             HungerLevel -= Convert.ToInt32(Console.ReadLine());
             if (HungerLevel < 0)
@@ -80,6 +85,27 @@ namespace VirtualPet
             {
                 Console.WriteLine("\n{0} has been fed\n", name);
                 Console.WriteLine("{0}'s hunger level is {1}/100\n", name, HungerLevel);
+            }
+            petWaste();
+        }
+
+        public void petWaste() // Pet waste when full or extra full
+        {
+            if ((HungerLevel >= 25 && HungerLevel <= 30) || (HungerLevel >= 5 && HungerLevel <= 10))
+            {
+                HungerLevel += (Tick() * 4);
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\n *** {0} had to take care of some personal business ***", name);
+                Console.WriteLine("\n             New hunger level is {0}/100", HungerLevel);
+                Console.ResetColor();
+            }
+            if ((ThirstLevel >= 25 && ThirstLevel <= 38) || (ThirstLevel >= 5 && ThirstLevel <= 12))
+            {
+                ThirstLevel += (Tick() * 3);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\n *** {0} had to take care of some personal business ***", name);
+                Console.WriteLine("\n             New thirst level is {0}/100", ThirstLevel);
+                Console.ResetColor();
             }
         }
 
