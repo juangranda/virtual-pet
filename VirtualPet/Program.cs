@@ -9,7 +9,7 @@ namespace VirtualPet
 {
     class Program
     {
-        static int Menu()
+    static int Menu()
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
@@ -29,6 +29,9 @@ namespace VirtualPet
             Console.WriteLine("WELCOME AND THANK YOU FOR ADOPTING A PUPPY!");
             Console.WriteLine("\nPlease enter the name of your new puppy:\n");
             VirtualPet myPet = new VirtualPet(Console.ReadLine());
+            myPet.PetImage();
+            Console.WriteLine();
+            Thread.Sleep(500);
             Console.WriteLine("\n{0} is so happy to be your new pet!", myPet.GetName());
             Console.WriteLine("\nEnjoy your time with {0} :)", myPet.GetName());
             myPet.TimeGoesBy();
@@ -36,6 +39,21 @@ namespace VirtualPet
             int choice = 1;
             while (choice != 5)
             {
+                if (myPet.BoredomLevel > 100)
+                {
+                    Console.WriteLine("\n{0}'s boredom level went over 100. \n\n{0} was too sad and left. :(", myPet.GetName());
+                    break;
+                }
+                if (myPet.PetBadFoodLevels())
+                {
+                    Console.WriteLine("{0}'s Feeding levels were bad. \nAnimal Services has taken {0} away. :(", myPet.GetName());
+                    break;
+                }
+                if (myPet.PetTooMuchWater())
+                {
+                    Console.WriteLine("\n{0} was dehydrated. \n\nAnimal Services has taken {0} away. :(", myPet.GetName());
+                    break;
+                }
                 choice = Menu();
                 if (choice == 1)
                 {

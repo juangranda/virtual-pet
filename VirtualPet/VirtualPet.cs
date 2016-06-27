@@ -32,6 +32,21 @@ namespace VirtualPet
             return name;
         }
 
+        public void PetImage()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("          \"\",_o");
+            Console.WriteLine("!       ( (  _)");
+            Console.WriteLine("`\\ ,,,,_'),)=~ ");
+            Console.WriteLine(" (          )  ");
+            Console.WriteLine("  ,   ,,,,  ,  ");
+            Console.WriteLine("  ) ,)   < (   ");
+            Console.WriteLine(" < <      \",\\  ");
+            Console.WriteLine("  \",)      \"_) ");
+            Console.WriteLine("");
+            Console.ResetColor();
+        }
+
         public int Tick() //random number generator used to increase levels of Hunger, Thirst, Boredom.
         {
             int tick = random.Next(1, 8);
@@ -121,6 +136,18 @@ namespace VirtualPet
             petWaste();
             Thread.Sleep(1500);
         }
+        public bool PetBadFoodLevels() // Animal Services takes pet away if overfed or underfed.
+        {
+            if (HungerLevel > 100)
+            {
+                return true;
+            }
+            else if (HungerLevel < -10)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public void petWaste() // Pet waste when full of food or water
         {
@@ -147,7 +174,7 @@ namespace VirtualPet
         static int overWater;
         public void WaterPet() // Gives pet water
         {
-            if (ThirstLevel == 0)
+            if (ThirstLevel <= 0)
             {
                 Console.WriteLine("{0} is not thirsty and doesn't want to drink water", name);
             }
@@ -183,6 +210,14 @@ namespace VirtualPet
             petWaste();
             Thread.Sleep(1500);
         }
+        public bool PetTooMuchWater() // Animal services takes pet away if dehydrated.
+        {
+            if (ThirstLevel > 100)
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// Options for pet activities. Used inside <see cref="PlayWithPet"/>
         private int PlayMenu() 
@@ -202,18 +237,21 @@ namespace VirtualPet
             Console.WriteLine(" '- \\-- ");
             Console.Write("   || ");
             Thread.Sleep(400);
-            Console.Write("    . ");
+            Console.Write("    ° ");
             Thread.Sleep(400);
-            Console.Write(". ");
+            Console.Write("° ");
             Thread.Sleep(400);
-            Console.Write(". ");
+            Console.Write("° ");
             Thread.Sleep(400);
-            Console.Write(". ");
+            Console.Write("° ");
             Thread.Sleep(400);
-            Console.Write(". \n");
+            Console.Write("° ");
             Thread.Sleep(400);
-        } 
-
+            Console.Write("º");
+            Thread.Sleep(400);
+            Console.Write("!\n");
+            Thread.Sleep(400);
+        }
         public void PlayWithPet() // Play with pet and reduce boredom and other levels
         {
             int playChoice = 0;
@@ -273,6 +311,6 @@ namespace VirtualPet
                 }
             }
             petWaste();
-        } 
-    }
+        }
+}
 }
