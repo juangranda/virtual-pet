@@ -9,11 +9,10 @@ namespace VirtualPet
 {
     class Program
     {
-        //static VirtualPet myNewPet = new VirtualPet();
         static int Menu()
         {
             string menuChoiceString = "0";
-            while (menuChoiceString != "1")
+            while (menuChoiceString != "5")
 
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -57,7 +56,9 @@ namespace VirtualPet
             Thread.Sleep(500);
             Console.WriteLine("\n{0} is so happy to be your new pet!", myPet.GetName());
             Console.WriteLine("\nEnjoy your time with {0} :)", myPet.GetName());
+            myPet.PetSleepsImage();
             myPet.TimeGoesBy();
+            
             int choice = 1;
             while (choice != 6)
             {
@@ -74,7 +75,7 @@ namespace VirtualPet
                 }
                 if (myPet.PetTooMuchWater())
                 {
-                    Console.WriteLine("\n{0} was dehydrated. \n\nAnimal Services has taken {0} away. :(", myPet.GetName());
+                    Console.WriteLine("\n{0}'s water levels were bad. \n\nAnimal Services has taken {0} away. :(", myPet.GetName());
                     break;
                 }
 
@@ -104,10 +105,6 @@ namespace VirtualPet
                 {
                     Console.WriteLine("\nThank you for taking care of {0}.\n", myPet.GetName());
                     Console.WriteLine("Press any key to exit");
-                }
-                else
-                {
-                    Console.WriteLine("\nPlease enter a number between 1 and 4\n");
                 }
             }
             Console.ReadKey();
